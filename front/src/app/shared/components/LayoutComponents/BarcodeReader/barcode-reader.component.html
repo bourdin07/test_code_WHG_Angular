@@ -1,5 +1,0 @@
-<button-default [ngValue]="buttonLabel" (click)="openModal(scanModal)"></button-default>
-
-<ng-template #scanModal>
-    <input nz-input class="barcode-input" #barcodeInput [(ngModel)]="barcodeValue" (blur)="onblur(barcodeInput)" autofocus (ngModelChange)="barcodeValueUpdate.next($event)" />
-</ng-template>
