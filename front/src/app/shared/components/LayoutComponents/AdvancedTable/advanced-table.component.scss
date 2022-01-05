@@ -1,0 +1,28 @@
+@import 'src/assets/styles/mixins.scss';
+
+.ant-advanced-search-form {
+  background: #fbfbfb;
+  margin: $margin-padding 0;
+}
+
+[nz-form-label] {
+  overflow: visible;
+}
+
+.text-right {
+  button-default, button-danger, button-primary {
+    margin-left: $margin-padding;
+  }
+}
+
+.ant-table-wrapper {
+  padding: $margin-padding 0;
+}
+
+.ant-advanced-search-form .ant-form-item {
+  margin-bottom: $margin-padding;
+}
+
+.nb-dossier {
+  margin-left: 20px;
+}

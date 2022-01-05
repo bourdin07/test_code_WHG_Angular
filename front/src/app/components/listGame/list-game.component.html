@@ -1,0 +1,24 @@
+<nz-list nzItemLayout="vertical">
+    <nz-list-item *ngFor="let item of listBrandGame" (click)="showAlert(item)">
+        <nz-list-item-meta>
+            <nz-list-item-meta-title>
+                <a href="{{ item.href }}">{{ item.game.name }}</a>
+            </nz-list-item-meta-title>
+            <nz-list-item-meta-description>
+                <p>Category : {{item.category}}</p>
+                <p>rtp : {{item.game.rtp}}</p>
+                <p>Hot : {{item.hot ? "Yes" : "No"}}</p>
+                <p>New : {{item.new ? "Yes" : "No"}}</p>
+                <p>Game provider : {{item.game.gameProvider.name}}</p>
+                <p>Brandid : {{item.brandid}}</p>
+            </nz-list-item-meta-description>
+        </nz-list-item-meta>
+        <nz-list-item-extra>
+            <img
+                width="272"
+                alt="logo"
+                src="https://stage.whgstage.com/scontent/images/games/{{item.game.launchcode}}.jpg"
+            />
+        </nz-list-item-extra>
+    </nz-list-item>
+</nz-list>

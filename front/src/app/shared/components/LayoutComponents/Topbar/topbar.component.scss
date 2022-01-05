@@ -1,0 +1,24 @@
+@import "src/assets/styles/mixins.scss";
+
+.topbar {
+  background: $white;
+  padding: 0 $margin-padding*2;
+  min-height: 64px;
+  height: 64px;
+  border-bottom: 1px solid $gray-border;
+  color: $text;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.current-title {
+  font-weight: bold;
+  font-size: rem(18);
+  color: $text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: $margin-padding/2;
+}

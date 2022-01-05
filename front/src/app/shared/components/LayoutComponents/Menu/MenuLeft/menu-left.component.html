@@ -1,0 +1,48 @@
+<div [ngClass]="isLightTheme ? 'navigation light' : 'navigation'">
+  <perfect-scrollbar [ngClass]="isMobileView ? 'scrollbarMobile' : 'scrollbarDesktop'">
+    <ul nz-menu [nzTheme]="isLightTheme ? 'light' : 'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isMenuCollapsed">
+      <ng-container *ngTemplateOutlet="menuTpl; context: {$implicit: menuDataActivated, level: 0}"></ng-container>
+      <ng-template #menuTpl let-menuDataActivated let-level="level">
+        <ng-container *ngFor="let item of menuDataActivated">
+          <ng-template #tooltipTpl>
+            {{ item.title }}
+          </ng-template>
+
+          <li
+            nz-menu-item *ngIf="authService.isGranted(item.roles) && item.url && item.target"
+            nz-tooltip nzPlacement="right" [nzTitle]="isMenuCollapsed && level === 0 ? tooltipTpl : ''"
+          >
+            <a href={{item.url}} target={{item.target}}>
+              <span class="title">{{item.title}}</span>
+              <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+            </a>
+          </li>
+          <li nz-menu-divider *ngIf="item.divider"></li>
+          <li
+            nz-menu-item *ngIf="authService.isGranted(item.roles) && !item.children && item.url && !item.target" routerLink={{item.url}} [nzSelected]="item.selected" [nzDisabled]="item.disabled"
+            nz-tooltip nzPlacement="right" [nzTitle]="isMenuCollapsed && level === 0 ? tooltipTpl : ''"
+          >
+            <span [ngStyle]="{'padding-left.px': isMenuCollapsed ? '0' : level * 15}">
+              <span class="title">{{item.title}}</span>
+              <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+            </span>
+          </li>
+          <li nz-submenu *ngIf="authService.isGranted(item.roles) && item.children" [nzOpen]="item.open && !isMenuCollapsed">
+            <span title [ngStyle]="{'padding-left.px': isMenuCollapsed ? '0' : level * 15}">
+              <span class="title">{{item.title}}</span>
+              <i *ngIf="item.icon" [ngClass]="[item.icon, 'icon']"></i>
+            </span>
+            <ul>
+              <ng-container *ngTemplateOutlet="menuTpl; context: {$implicit: item.children, level: level + 1}"></ng-container>
+            </ul>
+          </li>
+        </ng-container>
+      </ng-template>
+      <div class="logoContainer">
+        <a href routerLink="/home">
+          <img src="assets/images/ipc-gie_blanc.png" alt="" />
+        </a>
+      </div>
+    </ul>
+  </perfect-scrollbar>
+</div>

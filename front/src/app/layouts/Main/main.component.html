@@ -1,0 +1,95 @@
+<div class="card">
+    <div class="card-head">
+        <form
+            nz-form
+            [formGroup]="form"
+            (ngSubmit)="submitForm()"
+        >
+            <div class="form-block global-form">
+                <div
+                    nz-row
+                    nzGutter="24"
+                >
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label
+                                [nzSm]="8"
+                                nzRequired
+                                nzFor="country"
+                            >Country</nz-form-label>
+                            <nz-form-control [nzSm]="8">
+                                <nz-select
+                                    formControlName="country"
+                                    id="country"
+                                >
+                                    <nz-option
+                                        *ngFor="let c of country"
+                                        nzLabel="{{c.label}}"
+                                        [nzValue]="c.value"
+                                    ></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label
+                                [nzSm]="8"
+                                nzRequired
+                                nzFor="brandid"
+                            >Brandid</nz-form-label>
+                            <nz-form-control [nzSm]="8">
+                                <nz-select
+                                    formControlName="brandid"
+                                    id="brandid"
+                                >
+                                    <nz-option
+                                        *ngFor="let c of brandid"
+                                        nzLabel="{{c.label}}"
+                                        [nzValue]="c.value"
+                                    ></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col">
+                        <nz-form-item>
+                            <nz-form-label
+                                [nzSm]="8"
+                                nzRequired
+                                nzFor="country"
+                            >Category</nz-form-label>
+                            <nz-form-control [nzSm]="8">
+                                <nz-select
+                                    formControlName="category"
+                                    id="category"
+                                >
+                                    <nz-option
+                                        *ngFor="let c of category"
+                                        nzLabel="{{c.label}}"
+                                        [nzValue]="c.value"
+                                    ></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div
+                    nz-row
+                    nzGutter="24"
+                >
+                    <nz-form-control class="form-buttons">
+                            <button-default
+                                [ngValue]="'GET'"
+                                (click)="submitForm()"
+                            ></button-default>
+                    </nz-form-control>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-body">
+        <component-list-game [listBrandGame]="listBrandGame"></component-list-game>
+    </div>
+</div>

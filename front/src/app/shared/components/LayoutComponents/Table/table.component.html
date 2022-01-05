@@ -1,0 +1,103 @@
+<div class="clear">
+    <div class="table-operations">
+        <button nz-button (click)="resetFilters()">Supprimer les filtres</button>
+        <button nz-button (click)="resetSortAndFilters()">Supprimer les filtres et le tri</button>
+    </div>
+
+    <nz-table #ajaxTable
+              nzSize="middle"
+              nzShowSizeChanger
+              [nzFrontPagination]="false"
+              [nzData]="data"
+              [nzLoading]="loading"
+              [nzTotal]="total"
+              [(nzPageIndex)]="pageIndex"
+              [(nzPageSize)]="pageSize"
+              (nzPageIndexChange)="searchData()"
+              (nzPageSizeChange)="searchData(true)"
+              [nzSimple]="false"
+              [nzPageSizeOptions]="[25,50,100]"
+    >
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+            <ng-container *ngFor="let key of objectKeys(columns)">
+                <th *ngIf="columns[key].type !== 'hidden'"
+                    [nzShowSort]="columns[key].sortable ? '' : null"
+                    [nzSortKey]="columns[key].sortable ? key : null" 
+                    [nzShowFilter]="columns[key].filters && columns[key].filters.type === 'list' ? '' : null"
+                    [nzFilters]="columns[key].filters && columns[key].filters.type === 'list' ? columns[key].filters.choices : []"
+                    (nzFilterChange)="filterChange(key, $event, true)"
+                    [nzCustomFilter]="columns[key].filters && columns[key].filters.type !== 'list' ? '' : null"
+                >
+                    {{columns[key].name}}
+                    <nz-dropdown *ngIf="columns[key].filters && columns[key].filters.type === 'search'"
+                                  nzTrigger="click"
+                                  nzPlacement="bottomRight"
+                                  [nzClickHide]="false"
+                                  nzTableFilter
+                                  #dropdown
+                    >
+                        <i nz-icon
+                           nzType="search"
+                           class="ant-table-filter-icon"
+                           [class.ant-table-filter-open]="dropdown.nzVisible"
+                           nz-dropdown
+                        ></i>
+                        <div class="search-box">
+                            <input type="text" nz-input [(ngModel)]="filterValues[key].value" />
+                            <div>
+                                <button nz-button nzSize="small" nzType="primary" (click)="searchData(true)" class="search-button">
+                                    Rechercher
+                                </button>
+                                <button nz-button nzSize="small" (click)="resetFilters(key)">Réinitialiser</button>
+                            </div>
+                        </div>
+                    </nz-dropdown>
+                    <nz-dropdown *ngIf="columns[key].filters && columns[key].filters.type === 'range' && columns[key].type === 'date'"
+                                  nzTrigger="click"
+                                  nzPlacement="bottomRight"
+                                  [nzClickHide]="false"
+                                  nzTableFilter
+                                  #dropdown
+                    >
+                        <i nz-icon
+                           nzType="search"
+                           class="ant-table-filter-icon"
+                           [class.ant-table-filter-open]="dropdown.nzVisible"
+                           nz-dropdown
+                        ></i>
+                        <div class="search-box">
+                            <nz-date-picker nzFormat="yyyy/MM/dd" nzPlaceHolder="Min" [(ngModel)]="filterValues[key].value.min" (ngModelChange)="filterChange(key + '.min', $event)"></nz-date-picker>
+                            <nz-date-picker nzFormat="yyyy/MM/dd" nzPlaceHolder="Max" [(ngModel)]="filterValues[key].value.max" (ngModelChange)="filterChange(key + '.max', $event)"></nz-date-picker>
+                            <div>
+                                <button nz-button nzSize="small" nzType="primary" (click)="searchData(true)" class="search-button">
+                                    Rechercher
+                                </button>
+                                <button nz-button nzSize="small" (click)="resetFilters(key)">Réinitialiser</button>
+                            </div>
+                        </div>
+                    </nz-dropdown>
+                </th>
+            </ng-container>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of ajaxTable.data">
+            <ng-container *ngFor="let key of objectKeys(columns)">
+                <td *ngIf="key === 'actions'; else elseBlock">
+                    <a href *ngFor="let a of columns.actions.targets" [routerLink]="[a.path, data.id]">{{a.name}}</a>
+                </td>
+                <ng-template #elseBlock>
+                    <td *ngIf="columns[key].type === 'boolean'">{{data[key] | boolean}}</td>
+                    <td *ngIf="columns[key].type === 'date'">{{data[key] | date:'dd/MM/yyyy':'UTC'}}</td>
+                    <td *ngIf="columns[key].type === 'string'">{{data[key]}}</td>
+                    <td *ngIf="columns[key].type === 'other'">{{data[key]}}</td>
+                    <td *ngIf="columns[key].type === 'join-number'">{{data[key][columns[key].joinKey]}}</td>
+                    <td *ngIf="columns[key].type === 'join-string'">{{data[key][columns[key].joinKey]}}</td>
+                    <td *ngIf="columns[key].type === 'join-other'">{{data[key][columns[key].joinKey]}}</td>
+                </ng-template>
+            </ng-container>
+        </tr>
+        </tbody>
+    </nz-table>
+</div>

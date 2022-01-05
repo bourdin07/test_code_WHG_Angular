@@ -1,0 +1,35 @@
+<a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+    <nz-avatar nzIcon="user" [nzShape]="'square'" [nzSize]="'large'" class="avatar"></nz-avatar>
+</a>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>
+      <strong>{{firstname + ' ' + lastname}}</strong>
+      <div>
+        <strong>Role:</strong>
+        {{role.join(', ')}}
+      </div>
+    </li>
+    <!--<li nz-menu-divider></li>-->
+    <!--<li nz-menu-item>-->
+    <!--<a href="javascript: void(0);">-->
+    <!--<i class="menuIcon icmn-user"></i>-->
+    <!--Edit Profile-->
+    <!--</a>-->
+    <!--</li>-->
+    <li nz-menu-divider></li>
+    <li nz-menu-item >
+      <a href="javascript: void(0);" [routerLink]="['/user/changepw']">
+        <i class="menuIcon icmn-key"></i>
+        Changer de mot de passe
+      </a>
+    </li>
+    <li nz-menu-item >
+      <a href="javascript: void(0);" (click)="logout()">
+        <i class="menuIcon icmn-exit"></i>
+        Se déconnecter
+      </a>
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -1,0 +1,14 @@
+
+<i nz-icon 
+   nzType="info-circle" 
+   nzTheme="fill" 
+   nz-popover 
+   nzPopoverTitle="{{title}}" 
+   [(nzPopoverVisible)]="visible"
+   nzPopoverTrigger="click"
+   [nzPopoverContent]="contentTemplate"
+></i>
+
+<ng-template #contentTemplate>
+    {{content}}
+</ng-template>

@@ -1,0 +1,112 @@
+<div class="form-block">
+    <form nz-form [formGroup]="form">
+        <div nz-row nzGutter="16">
+            <div nz-col class="gutter-row" [nzSpan]="18">
+                <div nz-row nzGutter="16">
+                    <div nz-col class="gutter-row" [nzSpan]="24">
+                        <nz-form-item nzFlex>
+                            <nz-form-label [nzSm]="4" nzFor="item" *ngIf="isSite()">Site physique</nz-form-label>
+                            <nz-form-label [nzSm]="4" nzFor="item" *ngIf="isCategorie()">Catégorie bilan</nz-form-label>
+                            <nz-form-control [nzSm]="20">
+                                <nz-select [nzAllowClear]="true" formControlName="item" (ngModelChange)="getRendezVous()" id="item">
+                                    <nz-option *ngFor="let i1 of items1" nzLabel="{{i1.libelle}}" [nzValue]="i1.id"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div nz-row nzGutter="16">
+                    <div nz-col class="gutter-row" [nzSpan]="12">
+                        <nz-form-item nzFlex>
+                            <nz-form-label [nzSm]="8" nzFor="date_debut">Période du</nz-form-label>
+                            <nz-form-control [nzSm]="16">
+                                <app-browser-datepicker formControlName="date_debut" (ngModelChange)="getRendezVous()" id="date_debut"></app-browser-datepicker>
+<!--                                <nz-date-picker formControlName="date_debut" (ngModelChange)="getRendezVous()" id="date_debut" nzFormat="yyyy/MM/dd"></nz-date-picker>-->
+                                <app-validation-errors [form]="form" [errors]="form.get('date_debut').errors"></app-validation-errors>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="12">
+                        <nz-form-item nzFlex>
+                            <nz-form-label [nzSm]="8" nzFor="date_fin">au</nz-form-label>
+                            <nz-form-control [nzSm]="16">
+                                <app-browser-datepicker formControlName="date_fin" (ngModelChange)="getRendezVous()" id="date_fin"></app-browser-datepicker>
+<!--                                <nz-date-picker formControlName="date_fin" (ngModelChange)="getRendezVous()" id="date_fin" nzFormat="yyyy/MM/dd"></nz-date-picker>-->
+                                <app-validation-errors [form]="form" [errors]="form.get('date_fin').errors"></app-validation-errors>
+                                <ng-container *ngIf="plageMax">
+                                    <nz-form-explain>La durée maximale est de 5 semaines</nz-form-explain>
+                                </ng-container>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+                <div nz-row nzGutter="16">
+                    <div nz-col class="gutter-row" [nzSpan]="24">
+                        <span class="pull-right italic">
+                            TM : Tél. matin<br>
+                            TA : Tél. après-midi<br>
+                            IM : Internet matin<br>
+                            IA : Internet après-midi<br>
+                            T : Total
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div nz-row nzGutter="16" *ngIf="rendezVous">
+        <ng-container *ngIf="items2.length > 0; else noData;">
+            <nz-table #rdvs [nzData]="items2" nzSize="middle" [nzShowPagination]="false" [nzFrontPagination]="false">
+                <thead>
+                <tr class="text-center">
+                    <th rowspan="2" class="border-right"></th>
+                    <th class="border-right" *ngFor="let i2 of items2" colspan="5">{{ i2.libelle }}</th>
+                    <th colspan="5">Total général</th>
+                </tr>
+                <tr class="text-center">
+                    <ng-container *ngFor="let i2 of items2">
+                        <th class="text-center">TM</th>
+                        <th class="text-center">TA</th>
+                        <th class="text-center">IM</th>
+                        <th class="text-center">IA</th>
+                        <th class="text-center border-right">T</th>
+                    </ng-container>
+                    <th class="text-center">TM</th>
+                    <th class="text-center">TA</th>
+                    <th class="text-center">IM</th>
+                    <th class="text-center">IA</th>
+                    <th class="text-center">T</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" *ngFor="let infos of rendezVous">
+                    <td class="border-right">{{ getDay(infos.date | date: 'E':'UTC') }} {{ infos.date | date: 'dd/MM/y':'UTC' }}</td>
+                    <ng-container *ngFor="let i2 of items2">
+                        <td [ngClass]="infos.data[i2.id].rdv_tm ? 'orange' : ''">
+                            <span *ngIf="infos.data[i2.id].rdv_tm; else noDescriptionTM" nz-tooltip nzPlacement="top" nzTitle="{{ infos.data[i2.id].motif_tm }}">{{ infos.data[i2.id].tm }}</span>
+                            <ng-template #noDescriptionTM>{{ infos.data[i2.id].tm }}</ng-template>
+                        </td>
+                        <td [ngClass]="infos.data[i2.id].rdv_ta === true ? 'orange' : ''">
+                            <span *ngIf="infos.data[i2.id].rdv_ta === true; else noDescriptionTA" nz-tooltip nzPlacement="top" nzTitle="{{ infos.data[i2.id].motif_ta }}">{{ infos.data[i2.id].ta }}</span>
+                            <ng-template #noDescriptionTA>{{ infos.data[i2.id].ta }}</ng-template>
+                        </td>
+                        <td>{{ infos.data[i2.id].im }}</td>
+                        <td>{{ infos.data[i2.id].ia }}</td>
+                        <td class="bold border-right">{{ infos.data[i2.id].tot }}</td>
+                    </ng-container>
+                    <td>{{ infos.data['total'].tm }}</td>
+                    <td>{{ infos.data['total'].ta }}</td>
+                    <td>{{ infos.data['total'].im }}</td>
+                    <td>{{ infos.data['total'].ia }}</td>
+                    <td class="bold">{{ infos.data['total'].tot }}</td>
+                </tr>
+                </tbody>
+            </nz-table>
+        </ng-container>
+        <ng-template #noData>
+            <nz-alert nzType="info" nzMessage="Aucun planning trouvé"></nz-alert>
+        </ng-template>
+    </div>
+</div>

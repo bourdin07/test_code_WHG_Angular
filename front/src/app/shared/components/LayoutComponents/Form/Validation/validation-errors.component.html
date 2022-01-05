@@ -1,0 +1,87 @@
+<ng-container *ngIf="form.dirty && errors && errors['required']">
+    <nz-form-explain>Ce champ est obligatoire</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['email']">
+    <nz-form-explain>Veuillez saisir une adresse mail valide</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['atLeastOne']">
+    <nz-form-explain>Veuillez renseigner au moins un des champs</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['pattern']">
+    <nz-form-explain>Cette valeur n'est pas valide pour ce champ</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['numsecu']">
+    <nz-form-explain>Numéro sécurité sociale invalide</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['invalidTel']">
+    <nz-form-explain>Numéro de téléphone invalide</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['startDate']">
+    <nz-form-explain>La date de début doit être inférieure à la date de fin</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['endDateValue']">
+    <nz-form-explain>La date de début doit être inférieure à la date du jour</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['endDate']">
+    <nz-form-explain>La date de fin doit être supérieure à la date de début</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['startDateValue']">
+    <nz-form-explain>La date de début doit être supérieure à la date du jour</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['ageMin']">
+    <nz-form-explain>L'âge minimal doit être inférieure à l'âge maximal</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['ageMax']">
+    <nz-form-explain>L'âge maximal doit être supérieure à l'âge minimal</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['hourMin']">
+    <nz-form-explain>L'heure de début doit être inférieure à l'heure de fin</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['hourMax']">
+    <nz-form-explain>L'heure de fin doit être supérieure à l'heure de début</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['password']">
+    <nz-form-explain>Les mots de passe ne correspondent pas</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['confirmPassword']">
+    <nz-form-explain>Les mots de passe ne correspondent pas</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['number']">
+    <nz-form-explain>Le nombre est incorrect</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['min']">
+    <nz-form-explain>Le nombre est trop petit</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['max']">
+    <nz-form-explain>Le nombre est trop grand</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['minlength']">
+    <nz-form-explain>Le texte est trop court</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['maxlength']">
+    <nz-form-explain>Le texte est trop long</nz-form-explain>
+</ng-container>
+
+<ng-container *ngIf="form.dirty && errors && errors['checkboxObligatory']">
+    <nz-form-explain>Vous devez cocher cette case</nz-form-explain>
+</ng-container>

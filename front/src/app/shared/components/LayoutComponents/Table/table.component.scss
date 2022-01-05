@@ -1,0 +1,30 @@
+@import 'src/assets/styles/mixins.scss';
+
+.table-operations {
+  margin-bottom: $margin-padding;
+}
+
+.table-operations button {
+  margin-right: $margin-padding;
+}
+
+.search-box {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  padding: $margin-padding/2;
+}
+
+.search-box input {
+  width: 188px;
+  margin-bottom: $margin-padding;
+  display: block;
+}
+
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: $margin-padding;
+}
