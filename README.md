@@ -24,7 +24,7 @@
 | database        | MySQL / 8             |                       |
 | phpmyadmin      |                       | http://localhost:81   |
 | backend         | PHP 8.0 / Symfony 5.3 | http://localhost:8001 |
-| frontend        | Node 14 / Angular 13  | http://localhost:4201 |
+| frontend        | Node 16.13/Angular 13 | http://localhost:4201 |
 
 - phpmyadmin server : `database`
 - phpmyadmin username / password : `root` / `ChangeMe`
